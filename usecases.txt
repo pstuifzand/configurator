@@ -1,0 +1,9 @@
+# Show choices
+
+Show the list of choices in a vertical stack of boxes, with 
+the options in two columns.
+
+# Choose an option
+
+# Place an order
+
