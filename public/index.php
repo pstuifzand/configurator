@@ -6,16 +6,13 @@ use Configurator\ShowChoicesUsecase;
 use Configurator\Calculator;
 
 use Web\ChoicesPresenter;
+use Web\ShowChoices;
 
 $gateway = new MemoryChoicesGateway();
 $calculator = new Calculator();
 $usecase = new ShowChoicesUsecase($gateway, $calculator);
 
-$request = [
-    'choices_id' => 1,
-    'selection'  => [],
-];
-
+$request = (new ShowChoices())->buildRequest($_GET);
 $response = $usecase->execute($request);
 
 $presenter = new ChoicesPresenter();

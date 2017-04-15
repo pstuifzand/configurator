@@ -4,9 +4,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Configurator\\": "src\\",
-            "Web\\": "web\\",
-            "Test\\": "test\\"
+            "Configurator\\": "src/",
+            "Web\\": "web/",
+            "Test\\": "tests/Test/"
         }
     }
 }

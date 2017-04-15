@@ -28,10 +28,12 @@ class ChoicesPresenter
             'id'       => $id,
             'title'    => $choice->getTitle(),
             'name'     => $choice->getName(),
+            'param'    => sprintf('choice[%d]', $id),
             'open'     => $id == 1,
-            'selected' => false,
+            'selected' => $choice->hasSelection(),
             'type'     => $choice->getName() == 'page_count' ? 'select' : 'radio',
             'options'  => $options,
+            'current'  => '',
         ];
     }
 
@@ -40,11 +42,31 @@ class ChoicesPresenter
         $data = [];
 
         $id = 1;
+
+        $open = true;
         foreach ($response->choices as $choice) {
-            $data[] = $this->convertChoice($choice, $id);
+            $last = $this->convertChoice($choice, $id);
+            $last['open'] = $open;
+            $data[] = $last;
+            if ($open && !$last['selected'])
+                $open = false;
             $id++;
         }
 
-        return $data;
+        $calculation = [];
+        if (isset($response->result)) {
+            foreach ($response->result as $result) {
+                $calculation[] = [
+                    'days' => $result->days,
+                    'count' => $result->count,
+                    'price' => $result->totalPrice,
+                ];
+            }
+        }
+
+        return [
+            'choices' => $data,
+            'result'  => $calculation,
+        ];
     }
 }
