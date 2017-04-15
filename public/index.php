@@ -3,11 +3,13 @@ require __DIR__ . "/../vendor/autoload.php";
 
 use Configurator\MemoryChoicesGateway;
 use Configurator\ShowChoicesUsecase;
+use Configurator\Calculator;
 
 use Web\ChoicesPresenter;
 
 $gateway = new MemoryChoicesGateway();
-$usecase = new ShowChoicesUsecase($gateway);
+$calculator = new Calculator();
+$usecase = new ShowChoicesUsecase($gateway, $calculator);
 
 $request = [
     'choices_id' => 1,

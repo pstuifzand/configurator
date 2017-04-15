@@ -20,6 +20,7 @@ class Choice
     public function calculate($count)
     {
         return new Result(
+            $count,
             $this->options[$this->selected]->days,
             $this->options[$this->selected]->price*$count
         );

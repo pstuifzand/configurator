@@ -4,10 +4,12 @@ namespace Configurator;
 class ShowChoicesUsecase
 {
     protected $choicesGateway;
+    protected $calculator;
 
-    public function __construct(ChoicesGateway $choicesGateway)
+    public function __construct(ChoicesGateway $choicesGateway, Calculator $calculator = null)
     {
         $this->choicesGateway = $choicesGateway;
+        $this->calculator = $calculator;
     }
 
     public function execute($request)
@@ -17,7 +19,15 @@ class ShowChoicesUsecase
         foreach ($request['selection'] as $i => $selected) {
             $response->choices[$i]->setSelected($selected);
         }
-        $response->result = new Result(0, 0);
+        $request['counts'] = isset($request['counts']) ? $request['counts'] : [];
+
+        if (!is_null($this->calculator)) {
+            $response->result = [];
+            foreach ($request['counts'] as $count) {
+                $response->result[] = $this->calculator->calculate($response->choices, $count);
+            }
+        }
+
         return $response;
     }
 }

@@ -14,6 +14,7 @@ class CalculatorTest extends TestCase
         $c = new Calculator();
         $result = $c->calculate($choices, 100);
 
+        $this->assertEquals(100, $result->count);
         $this->assertEquals(0, $result->days);
         $this->assertEquals(0, $result->totalPrice);
     }
