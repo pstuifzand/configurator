@@ -24,7 +24,7 @@ class CalculatorTest extends TestCase
             new Choice("Kies de productiemethode", [
                 new Option("Digitaal drukwerk", 1, 3),
                 new Option("Offset drukwerk", 3, 1)
-            ]),
+            ], 'production'),
         ];
         $choices[0]->selected = 0;
 
@@ -41,7 +41,7 @@ class CalculatorTest extends TestCase
             new Choice("Kies of productiemethode", [
                 new Option("Digitaal drukwerk", 1, 3),
                 new Option("Offset drukwerk", 3, 1)
-            ]),
+            ], 'production'),
         ];
         $choices[0]->selected = 1;
 
@@ -58,12 +58,12 @@ class CalculatorTest extends TestCase
             new Choice("Kies of productiemethode", [
                 new Option("Digitaal drukwerk", 1, 3),
                 new Option("Offset drukwerk", 3, 1)
-            ]),
+            ], 'production'),
             new Choice("Kies het eindformaat", [
                 new Option("A4", 0, 3),
                 new Option("A5", 0, 2),
                 new Option("A6", 0, 1)
-            ]),
+            ], 'production'),
         ];
 
         $choices[0]->selected = 0;
@@ -82,12 +82,12 @@ class CalculatorTest extends TestCase
             new Choice("Kies of productiemethode", [
                 new Option("Digitaal drukwerk", 1, 3),
                 new Option("Offset drukwerk", 3, 1)
-            ]),
+            ], 'production'),
             new Choice("Kies het eindformaat", [
                 new Option("A4", 0, 3),
                 new Option("A5", 0, 2),
                 new Option("A6", 0, 1)
-            ]),
+            ], 'production'),
         ];
 
         $choices[0]->selected = 0;

@@ -7,11 +7,13 @@ class Choice
 
     protected $options;
     protected $title;
+    protected $name;
 
-    public function __construct($title, $options, $selected = null)
+    public function __construct($title, $options, $name, $selected = null)
     {
         $this->title = $title;
         $this->options = $options;
+        $this->name = $name;
         $this->selected = $selected;
     }
 
@@ -33,14 +35,14 @@ class Choice
         return $this->options;
     }
 
-    /**
-     * Getter for title
-     *
-     * @return string
-     */
     public function getTitle()
     {
         return $this->title;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     public function getSelectedOption()
@@ -48,12 +50,6 @@ class Choice
         return $this->options[$this->selected];
     }
 
-    /**
-     * Setter for selected
-     *
-     * @param string $selected
-     * @return Choice
-     */
     public function setSelected($selected)
     {
         $this->selected = $selected;

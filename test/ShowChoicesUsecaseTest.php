@@ -46,7 +46,7 @@ class ShowChoicesUsecaseTest extends TestCase
         $mock = $this->createMock(ChoicesGateway::class);
         $mock->method('getChoices')
             ->with(1)
-            ->willReturn([new Choice("TEST", [new Option("TEST-A", 0, 0)])]);
+            ->willReturn([new Choice("TEST", [new Option("TEST-A", 0, 0)], 'test')]);
 
         $usecase = new ShowChoicesUsecase($mock);
         $request = [
