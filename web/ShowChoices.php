@@ -1,23 +1,20 @@
 <?php
 namespace Web;
+use Configurator\Usecases\ShowChoices\Request;
 
 class ShowChoices
 {
     public function buildRequest($get)
     {
-        $result = [];
-        if (isset($get['choices_id'])) {
-            $result['choices_id'] = $get['choices_id'];
-        }
+        $options = [
+            'choices_id' => $get['choices_id'] ?? null,
+            'selection'  => isset($get['choice']) ? $get['choice'] : [],
+        ];
+        $request = new Request($options);
 
-        if (isset($get['choice'])) {
-            foreach ($get['choice'] as $id => $optionId) {
-                $result['selection'][$id-1] = $optionId-1;
-            }
-        }
+        $request->setCounts([50, 100, 250, 500, 1000]);
 
-        $result['counts'] = [50, 100, 250, 500, 1000];
-
-        return $result;
+        return $request;
     }
 }
+

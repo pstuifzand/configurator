@@ -2,7 +2,6 @@
 namespace Test\Web;
 
 use PHPUnit\Framework\TestCase;
-
 use Web\ShowChoices;
 
 class ShowChoicesTest extends TestCase
@@ -11,23 +10,21 @@ class ShowChoicesTest extends TestCase
     {
         $c = new ShowChoices();
         $r = $c->buildRequest([]);
-        $this->assertArrayHasKey('counts', $r);
+        $this->assertGreaterThan(1, $r->getCounts());
     }
 
     public function testBuildRequestChoicesId()
     {
         $c = new ShowChoices();
         $r = $c->buildRequest(['choices_id' => 1]);
-        $this->assertEquals(1, $r['choices_id']);
+        $this->assertEquals(1, $r->getChoicesId());
     }
 
     public function testBuildRequestChoicesIdWithExtra()
     {
         $c = new ShowChoices();
         $r = $c->buildRequest(['choices_id' => 1, 'unused' => 1]);
-        $this->assertEquals(1, $r['choices_id']);
-        $this->assertArrayHasKey('counts', $r);
-        $this->assertEquals(2, count($r));
+        $this->assertEquals(1, $r->getChoicesId());
     }
 
     public function testBuildRequestSelection()
@@ -41,8 +38,7 @@ class ShowChoicesTest extends TestCase
                 3 => 4,
             ]
         ]);
-        $this->assertEquals(0, $r['selection'][0]);
-        $this->assertEquals(1, $r['selection'][1]);
-        $this->assertEquals(3, $r['selection'][2]);
+        $selection = $r->getSelection();
+        $this->assertEquals([0 => 0, 1 => 1, 2 => 3], $selection);
     }
 }

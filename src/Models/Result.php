@@ -1,5 +1,5 @@
 <?php
-namespace Configurator;
+namespace Configurator\Models;
 
 class Result
 {
@@ -14,6 +14,12 @@ class Result
         $this->totalPrice = $price;
     }
 
+    /**
+     * Combine left and right argument. Implements Monoid.
+     *
+     * @param $right Result
+     * @return Result
+     */
     public function combine($right) {
 
         return new Result(

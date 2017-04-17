@@ -1,9 +1,9 @@
 <?php
-namespace Configurator;
+namespace Configurator\Models;
 
 class Choice
 {
-    public $selected;
+    private $selected;
 
     protected $options;
     protected $title;
@@ -17,13 +17,17 @@ class Choice
         $this->selected = $selected;
     }
 
+    /**
+     * @return Result
+     */
     public function calculate($count)
     {
-        return new Result(
-            $count,
-            $this->options[$this->selected]->days,
-            $this->options[$this->selected]->price*$count
-        );
+        if (is_null($this->selected)) {
+            return new Result($count, 0, 0);
+        }
+
+        $option = $this->options[$this->selected];
+        return $option->calculate($count);
     }
 
     /**

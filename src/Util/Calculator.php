@@ -1,9 +1,16 @@
 <?php
 
-namespace Configurator;
+namespace Configurator\Util;
+
+use Configurator\Models\Result;
 
 class Calculator
 {
+    /**
+     * @param $choices  \Configurator\Models\Choice[]
+     * @param $count    int
+     * @return Result
+     */
     public function calculate($choices, $count)
     {
         $total = new Result($count, 0, 0);

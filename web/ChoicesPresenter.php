@@ -37,32 +37,50 @@ class ChoicesPresenter
         ];
     }
 
-    public function present($request, $response)
+    private function presentCalculation($results)
     {
+        $calculation = [];
+
+        foreach ($results as $result) {
+            $calculation[] = [
+                'days'  => $result->days,
+                'count' => $result->count,
+                'price' => '&euro; ' . number_format($result->totalPrice, 2, ',', ''),
+            ];
+        }
+
+        return $calculation;
+    }
+
+    public function presentChoices($response)
+    {
+        $id = 1;
+        $open = true;
+
         $data = [];
 
-        $id = 1;
-
-        $open = true;
         foreach ($response->choices as $choice) {
             $last = $this->convertChoice($choice, $id);
             $last['open'] = $open;
             $data[] = $last;
-            if ($open && !$last['selected'])
+
+            if ($open && !$last['selected']) {
                 $open = false;
+            }
+
             $id++;
         }
 
-        $calculation = [];
-        if (isset($response->result)) {
-            foreach ($response->result as $result) {
-                $calculation[] = [
-                    'days' => $result->days,
-                    'count' => $result->count,
-                    'price' => $result->totalPrice,
-                ];
-            }
-        }
+        return $data;
+    }
+
+    public function present($request, $response)
+    {
+        $data = $this->presentChoices($response);
+
+        $calculation = isset($response->result) 
+            ? $this->presentCalculation($response->result)
+            : [];
 
         return [
             'choices' => $data,

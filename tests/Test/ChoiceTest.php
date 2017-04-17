@@ -1,7 +1,6 @@
 <?php
+use Configurator\Models\Choice;
 use PHPUnit\Framework\TestCase;
-
-use Configurator\Choice;
 
 class ChoiceTest extends TestCase
 {

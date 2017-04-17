@@ -1,12 +1,13 @@
 <?php
 namespace Test;
 
+use Configurator\Util\Calculator;
+use Configurator\Models\Choice;
+use Configurator\Gateway\ChoicesGateway;
+use Configurator\Models\Option;
+use Configurator\Usecases\ShowChoices;
+use Configurator\Usecases\ShowChoices\Request;
 use PHPUnit\Framework\TestCase;
-use Configurator\ShowChoicesUsecase;
-use Configurator\ChoicesGateway;
-use Configurator\Choice;
-use Configurator\Option;
-use Configurator\Calculator;
 
 class ShowChoicesUsecaseTest extends TestCase
 {
@@ -16,11 +17,11 @@ class ShowChoicesUsecaseTest extends TestCase
         $mock->method('getChoices')
              ->willReturn([]);
 
-        $usecase = new ShowChoicesUsecase($mock);
-        $request = [
+        $usecase = new ShowChoices($mock);
+        $request = new Request([
             'choices_id' => 1,
             'selection'  => [],
-        ];
+        ]);
 
         $response = $usecase->execute($request);
         $this->assertEquals([], $response->choices);
@@ -33,13 +34,14 @@ class ShowChoicesUsecaseTest extends TestCase
             ->method('getChoices')
             ->with(1);
 
-        $usecase = new ShowChoicesUsecase($mock);
-        $request = [
+        $usecase = new ShowChoices($mock);
+
+        $request = new Request([
             'choices_id' => 1,
             'selection'  => [],
-        ];
+        ]);
 
-        $response = $usecase->execute($request);
+        $usecase->execute($request);
     }
 
     public function testUsecaseOneChoiceSelection()
@@ -47,15 +49,15 @@ class ShowChoicesUsecaseTest extends TestCase
         $mock = $this->createMock(ChoicesGateway::class);
         $mock->method('getChoices')
             ->with(1)
-            ->willReturn([new Choice("TEST", [new Option("TEST-A", 0, 0)], 'test')]);
+            ->willReturn([new Choice("TEST", [new Option("TEST-A", 0, 0, 0)], 'test')]);
 
         $calculator = new Calculator();
-        $usecase = new ShowChoicesUsecase($mock, $calculator);
-        $request = [
+        $usecase = new ShowChoices($mock, $calculator);
+        $request = new Request([
             'choices_id' => 1,
-            'selection'  => ['0' => '0'],
+            'selection'  => ['1' => '1'],
             'counts'     => [100],
-        ];
+        ]);
 
         $response = $usecase->execute($request);
         $this->assertEquals("TEST", $response->choices[0]->getTitle());
@@ -69,15 +71,15 @@ class ShowChoicesUsecaseTest extends TestCase
         $mock = $this->createMock(ChoicesGateway::class);
         $mock->method('getChoices')
             ->with(1)
-            ->willReturn([new Choice("TEST", [new Option("TEST-A", 0, 0)], 'test')]);
+            ->willReturn([new Choice("TEST", [new Option("TEST-A", 0, 0, 0)], 'test')]);
 
         $calculator = new Calculator();
-        $usecase = new ShowChoicesUsecase($mock, $calculator);
-        $request = [
+        $usecase = new ShowChoices($mock, $calculator);
+        $request = new Request([
             'choices_id' => 1,
-            'selection'  => ['0' => '0'],
+            'selection'  => ['1' => '1'],
             'counts'     => [50, 100, 250, 500, 1000],
-        ];
+        ]);
 
         $response = $usecase->execute($request);
         $this->assertNotEmpty($response->result);
@@ -89,17 +91,17 @@ class ShowChoicesUsecaseTest extends TestCase
         $choicesGateway = $this->createMock(ChoicesGateway::class);
         $choicesGateway->method('getChoices')
             ->with(1)
-            ->willReturn([new Choice("TEST", [new Option("TEST-A", 1, 3)], 'test')]);
+            ->willReturn([new Choice("TEST", [new Option("TEST-A", 1, 3, 0)], 'test')]);
 
         $calculator = new Calculator();
 
-        $usecase = new ShowChoicesUsecase($choicesGateway, $calculator);
+        $usecase = new ShowChoices($choicesGateway, $calculator);
 
-        $request = [
+        $request = new Request([
             'choices_id' => 1,
-            'selection'  => ['0' => '0'],
+            'selection'  => ['1' => '1'],
             'counts'     => [50, 100, 250, 500, 1000],
-        ];
+        ]);
 
         $response = $usecase->execute($request);
 

@@ -2,6 +2,7 @@
     "require": {
         "phpunit/phpunit": "^6.1"
     },
+    "minumum-stability":"dev",
     "autoload": {
         "psr-4": {
             "Configurator\\": "src/",

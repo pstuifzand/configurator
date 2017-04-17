@@ -5,5 +5,7 @@ the options in two columns.
 
 # Choose an option
 
+You can choose an option.
+
 # Place an order
 

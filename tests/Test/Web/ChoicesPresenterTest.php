@@ -1,8 +1,13 @@
 <?php
+
+namespace Test\Web;
+
+use Configurator\Models\Choice;
+use Configurator\Models\Option;
+
 use PHPUnit\Framework\TestCase;
+
 use Web\ChoicesPresenter;
-use Configurator\Choice;
-use Configurator\Option;
 
 class ChoicesPresenterTest extends TestCase
 {
@@ -35,12 +40,12 @@ class ChoicesPresenterTest extends TestCase
         $result = $p->present([], (object)[
             'choices' => [
                 new Choice("Kies je productiemethode", [
-                    new Option("Digitaal drukwerk", 0, 0),
-                    new Option("Offset drukwerk", 0, 0),
+                    new Option("Digitaal drukwerk", 0, 0, 0),
+                    new Option("Offset drukwerk", 0, 0, 0),
                 ], 'production'),
                 new Choice("Kies het eindformaat", [
-                    new Option("A4", 0, 0),
-                    new Option("A5", 0, 0),
+                    new Option("A4", 0, 0, 0),
+                    new Option("A5", 0, 0, 0),
                 ], 'size') 
             ]
         ]);
@@ -59,8 +64,8 @@ class ChoicesPresenterTest extends TestCase
         $result = $p->present([], (object)[
             'choices' => [
                 new Choice("Kies je productiemethode", [
-                    new Option("Digitaal drukwerk", 0, 0),
-                    new Option("Offset drukwerk", 0, 0),
+                    new Option("Digitaal drukwerk", 0, 0, 0),
+                    new Option("Offset drukwerk", 0, 0, 0),
                 ], 'production') 
             ]
         ]);
